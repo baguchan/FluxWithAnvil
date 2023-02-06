@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "baguchan.flux_with_anvil.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "refmap": "flux_with_anvil.refmap.json",
+  "mixins": [
+    "AnvilBlockMixin",
+    "ServerGamePacketListenerImplMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
