@@ -63,8 +63,8 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 		this.access = p_40250_;
 		this.player = p_40249_.player;
 		this.addSlot(new Slot(this.inputSlots, 0, 27, 47));
-		this.addSlot(new Slot(this.inputSlots, 1, 76, 47));
-		this.addSlot(new Slot(this.inputSlots, 2, 52, 65){
+		this.addSlot(new Slot(this.inputSlots, 1, 62, 47));
+		this.addSlot(new Slot(this.inputSlots, 2, 94, 47) {
 			@Override
 			public boolean mayPlace(ItemStack p_40231_) {
 				return FluxConfigs.isWhitelistedItem(p_40231_.getItem());
@@ -167,16 +167,16 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 	}
 
 	protected boolean mayPickup(Player p_39023_, boolean p_39024_) {
-		return (p_39023_.getAbilities().instabuild || p_39023_.experienceLevel >= this.cost.get()) && this.cost.get() > 0;
+		return true;
 	}
 
 	protected void onTake(Player p_150474_, ItemStack p_150475_) {
 		ItemStack itemstack2 = this.inputSlots.getItem(2);
 		itemstack2.shrink(this.fluxCost.get());
-		if (!p_150474_.getAbilities().instabuild) {
+	/*	if (!p_150474_.getAbilities().instabuild) {
 
 			p_150474_.giveExperienceLevels(-this.cost.get());
-		}
+		}*/
 
 		float breakChance = net.minecraftforge.common.ForgeHooks.onAnvilRepair(p_150474_, p_150475_, RevampAnvilMenu.this.inputSlots.getItem(0), RevampAnvilMenu.this.inputSlots.getItem(1));
 

@@ -58,7 +58,7 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 		this.blit(p_98917_, i, j, 0, 0, this.imageWidth, this.imageHeight);
 		this.blit(p_98917_, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
 		if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(3).hasItem()) {
-			this.blit(p_98917_, i + 99, j + 45, this.imageWidth, 0, 28, 21);
+			this.blit(p_98917_, i + 107, j + 45, this.imageWidth, 0, 28, 21);
 		}
 
 	}
@@ -126,7 +126,7 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 			} else if (!this.menu.getSlot(3).hasItem()) {
 				component = null;
 			} else {
-				component = Component.translatable("container.repair.cost", i);
+				component = Component.translatable("container.flux_with_anvil.repair.cost", i);
 				if (!this.menu.getSlot(3).mayPickup(this.player)) {
 					j = 16736352;
 				}
