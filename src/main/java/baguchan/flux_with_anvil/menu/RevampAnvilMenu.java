@@ -62,9 +62,9 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 		super(ModMenuTypes.REVAMPED_ANVIL.get(), p_40248_);
 		this.access = p_40250_;
 		this.player = p_40249_.player;
-		this.addSlot(new Slot(this.inputSlots, 0, 27, 47));
-		this.addSlot(new Slot(this.inputSlots, 1, 62, 47));
-		this.addSlot(new Slot(this.inputSlots, 2, 94, 47) {
+		this.addSlot(new Slot(this.inputSlots, 0, 23, 47));
+		this.addSlot(new Slot(this.inputSlots, 1, 76, 47));
+		this.addSlot(new Slot(this.inputSlots, 2, 58, 47) {
 			@Override
 			public boolean mayPlace(ItemStack p_40231_) {
 				return FluxConfigs.isWhitelistedItem(p_40231_.getItem());
@@ -167,7 +167,9 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 	}
 
 	protected boolean mayPickup(Player p_39023_, boolean p_39024_) {
-		return true;
+		ItemStack flux = this.inputSlots.getItem(2);
+		boolean flag = FluxConfigs.isWhitelistedItem(flux.getItem()) && flux.getCount() >= this.getFluxCost();
+		return flag;
 	}
 
 	protected void onTake(Player p_150474_, ItemStack p_150475_) {
@@ -401,21 +403,18 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 			}else {
 				this.setFluxCost(calculateFluxCost(k2));
 			}*/
-			if(nameFlag && !enchantFlag){
+			if (nameFlag && !enchantFlag) {
 				this.setFluxCost(0);
-			}else {
-				if(FluxConfigs.COMMON.noFluxUsingWithEnchantBooks.get() && flag) {
+			} else {
+				if (FluxConfigs.COMMON.noItemUsingWithEnchantBooks.get() && flag) {
 					this.setFluxCost(0);
-				}else {
-					this.setFluxCost(this.getCost());
+				} else {
+					this.setFluxCost(calculateFluxCost(this.getCost()));
 				}
 			}
 
-			if(FluxConfigs.isWhitelistedItem(flux.getItem()) && flux.getCount() >= this.getFluxCost() || nameFlag && !enchantFlag) {
-				this.resultSlots.setItem(0, itemstack1);
-			}else {
-				this.resultSlots.setItem(0, ItemStack.EMPTY);
-			}
+			this.resultSlots.setItem(0, itemstack1);
+
 			this.broadcastChanges();
 		}
 	}
@@ -425,7 +424,11 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 	}
 
 	public static int calculateFluxCost(int p_39026_) {
-		return Mth.clamp((p_39026_ / 10) + 1, 1, 3);
+		if (FluxConfigs.COMMON.reduceItemCost.get()) {
+			return Mth.clamp((p_39026_ / 10) + 1, 1, 3);
+		} else {
+			return p_39026_;
+		}
 	}
 
 	public void setItemName(String p_39021_) {

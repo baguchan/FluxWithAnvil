@@ -29,7 +29,7 @@ displayName = "FluxWithAnvil" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile = "flux_with_anvil.png" #optional
 # A text field displayed in the mod UI
-credits = "mayonaka8478 made gui textures" #optional
+credits = "mayonaka8478 and moromorochan made gui textures" #optional
 # A text field displayed in the mod UI
 authors = "bagu_chan" #optional
 # Display Test controls the display for your mod in the server connection screen

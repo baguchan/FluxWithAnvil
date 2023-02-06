@@ -18,18 +18,22 @@ public class FluxConfigs {
 		COMMON = specPair.getLeft();
 	}
 	public static class Common {
-		public final ForgeConfigSpec.BooleanValue noFluxUsingWithEnchantBooks;
+		public final ForgeConfigSpec.BooleanValue noItemUsingWithEnchantBooks;
+		public final ForgeConfigSpec.BooleanValue reduceItemCost;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> fluxWhitelist;
 
 		public Common(ForgeConfigSpec.Builder builder) {
 			Predicate<Object> validator = o -> o instanceof String;
-			noFluxUsingWithEnchantBooks = builder
-					.comment("Disable using flux With Enchant Books. [true / false]")
-					.define("No Flux Using With Enchant Books", false);
+			noItemUsingWithEnchantBooks = builder
+					.comment("Disable using item With Enchant Books on Anvil. [true / false]")
+					.define("No Item Using With Enchant Books", false);
+			reduceItemCost = builder
+					.comment("Reduce the amount of items needed for Anvil. [true / false]")
+					.define("ReduceItemCost", false);
 			fluxWhitelist = builder
-					.comment("Add Item for Anvil's flux [example: minecraft:calcite]")
-					.defineList("Anvil Flux Whitelist"
-							, Lists.newArrayList("minecraft:calcite")
+					.comment("Add Item for Anvil's item [example: minecraft:lapis_lazuli]")
+					.defineList("Anvil Item Whitelist"
+							, Lists.newArrayList("minecraft:lapis_lazuli")
 							, validator);
 		}
 	}
