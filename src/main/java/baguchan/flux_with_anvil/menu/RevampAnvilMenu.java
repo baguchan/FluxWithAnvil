@@ -425,7 +425,7 @@ public class RevampAnvilMenu extends AbstractContainerMenu {
 
 	public static int calculateFluxCost(int p_39026_) {
 		if (FluxConfigs.COMMON.reduceItemCost.get()) {
-			return Mth.clamp((p_39026_ / 10) + 1, 1, 3);
+			return Mth.clamp((p_39026_ / 5) + 1, 1, 3);
 		} else {
 			return p_39026_;
 		}
