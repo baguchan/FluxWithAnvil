@@ -64,7 +64,6 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 	}
 
 	protected void subInit() {
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.name = new EditBox(this.font, i + 62, j + 24, 103, 12, Component.translatable("container.repair"));
@@ -89,7 +88,6 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 	public void removed() {
 		super.removed();
 		this.menu.removeSlotListener(this);
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	public boolean keyPressed(int p_97878_, int p_97879_, int p_97880_) {
