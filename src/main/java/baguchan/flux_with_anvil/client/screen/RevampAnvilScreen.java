@@ -3,11 +3,10 @@ package baguchan.flux_with_anvil.client.screen;
 import baguchan.flux_with_anvil.FluxWithAnvil;
 import baguchan.flux_with_anvil.menu.RevampAnvilMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundRenameItemPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -30,18 +29,21 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 		this.titleLabelX = 60;
 	}
 
+	@Override
 	public void containerTick() {
 		super.containerTick();
 		this.name.tick();
 	}
 
+	@Override
 	protected void init() {
 		super.init();
 		this.subInit();
 		this.menu.addSlotListener(this);
 	}
 
-	public void render(PoseStack p_98922_, int p_98923_, int p_98924_, float p_98925_) {
+	@Override
+	public void render(GuiGraphics p_98922_, int p_98923_, int p_98924_, float p_98925_) {
 		this.renderBackground(p_98922_);
 		super.render(p_98922_, p_98923_, p_98924_, p_98925_);
 		RenderSystem.disableBlend();
@@ -49,18 +51,15 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 		this.renderTooltip(p_98922_, p_98923_, p_98924_);
 	}
 
-	protected void renderBg(PoseStack p_98917_, float p_98918_, int p_98919_, int p_98920_) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, ANVIL_LOCATION);
+	@Override
+	protected void renderBg(GuiGraphics guiGraphics, float p_98918_, int p_98919_, int p_98920_) {
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(p_98917_, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		this.blit(p_98917_, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
+		guiGraphics.blit(ANVIL_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(ANVIL_LOCATION, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
 		if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(3).hasItem()) {
-			this.blit(p_98917_, i + 99, j + 45, this.imageWidth, 0, 28, 21);
+			guiGraphics.blit(ANVIL_LOCATION, i + 99, j + 45, this.imageWidth, 0, 28, 21);
 		}
-
 	}
 
 	protected void subInit() {
@@ -79,17 +78,20 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 		this.name.setEditable(false);
 	}
 
+	@Override
 	public void resize(Minecraft p_97886_, int p_97887_, int p_97888_) {
 		String s = this.name.getValue();
 		this.init(p_97886_, p_97887_, p_97888_);
 		this.name.setValue(s);
 	}
 
+	@Override
 	public void removed() {
 		super.removed();
 		this.menu.removeSlotListener(this);
 	}
 
+	@Override
 	public boolean keyPressed(int p_97878_, int p_97879_, int p_97880_) {
 		if (p_97878_ == 256) {
 			this.minecraft.player.closeContainer();
@@ -111,9 +113,10 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 		}
 	}
 
-	protected void renderLabels(PoseStack p_97890_, int p_97891_, int p_97892_) {
+	@Override
+	protected void renderLabels(GuiGraphics guiGraphics, int p_97891_, int p_97892_) {
 		RenderSystem.disableBlend();
-		super.renderLabels(p_97890_, p_97891_, p_97892_);
+		super.renderLabels(guiGraphics, p_97891_, p_97892_);
 		int i = this.menu.getCost();
 		if (i > 0) {
 			int j = 8453920;
@@ -133,21 +136,22 @@ public class RevampAnvilScreen extends AbstractContainerScreen<RevampAnvilMenu> 
 			if (component != null) {
 				int k = this.imageWidth - 8 - this.font.width(component) - 2;
 				int l = 69;
-				fill(p_97890_, k - 2, 67, this.imageWidth - 8, 79, 1325400064);
-				this.font.drawShadow(p_97890_, component, (float)k, 69.0F, j);
+				guiGraphics.fill(k - 2, 67, this.imageWidth - 8, 79, 1325400064);
+				guiGraphics.drawString(this.font, component, k, 69, j);
 			}
 		}
 
 	}
 
-	public void renderFg(PoseStack p_97894_, int p_97895_, int p_97896_, float p_97897_) {
+	public void renderFg(GuiGraphics p_97894_, int p_97895_, int p_97896_, float p_97897_) {
 		this.name.render(p_97894_, p_97895_, p_97896_, p_97897_);
 	}
 
-
+	@Override
 	public void dataChanged(AbstractContainerMenu p_169759_, int p_169760_, int p_169761_) {
 	}
 
+	@Override
 	public void slotChanged(AbstractContainerMenu p_97882_, int p_97883_, ItemStack p_97884_) {
 		if (p_97883_ == 0) {
 			this.name.setValue(p_97884_.isEmpty() ? "" : p_97884_.getHoverName().getString());
